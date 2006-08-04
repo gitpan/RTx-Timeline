@@ -9,4 +9,6 @@ no_index:
     - html
     - inc
     - t
+requires: 
+  JSON::Syck: 0
 version: 0.01
