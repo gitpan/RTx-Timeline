@@ -2,6 +2,12 @@
 var tl;
 function LoadTimeline() {
   var eventSource = new Timeline.DefaultEventSource();
+
+  var theme = Timeline.ClassicTheme.create();
+  theme.event.label.width = 250; // px
+  theme.event.bubble.width = 250;
+  theme.event.bubble.height = 200;
+
   var bandInfos = [
     Timeline.createBandInfo({
         eventSource:    eventSource,
@@ -9,7 +15,7 @@ function LoadTimeline() {
         //date:           "Apr 01 2005 00:00:00 GMT",
         width:          "75%",
         intervalUnit:   Timeline.DateTime.DAY,
-        intervalPixels: 200,
+        intervalPixels: 200
     }),
     Timeline.createBandInfo({
         eventSource:    eventSource,
@@ -18,7 +24,7 @@ function LoadTimeline() {
         intervalUnit:   Timeline.DateTime.MONTH,
         intervalPixels: 300,
         showEventText:  false,
-        trackHeight:    0.5,
+        trackHeight:    0.5
     }),
     Timeline.createBandInfo({
         eventSource:    eventSource,
@@ -27,7 +33,7 @@ function LoadTimeline() {
         intervalUnit:   Timeline.DateTime.YEAR,
         intervalPixels: 500,
         showEventText:  false,
-        trackHeight:    0.2,
+        trackHeight:    0.2
     })
   ];
   bandInfos[1].syncWith = 0;
@@ -35,8 +41,8 @@ function LoadTimeline() {
   bandInfos[2].syncWith = 1;
   bandInfos[2].highlight = true;
 
-  Timeline.loadJSON("<%$RT::WebPath%>/Search/Elements/timeline.js?Query=<%$Query|n%>", function(json, url) { eventSource.loadJSON(json, url); });
-  tl = Timeline.create(document.getElementById("<%$id%>"), bandInfos);
+  tl = Timeline.create(document.getElementById("<%$id%>"), bandInfos, Timeline.HORIZONTAL);
+  tl.loadJSON("<%$RT::WebPath%>/Search/Elements/timeline.js?Query=<%$Query|n%>", function(json, url) { eventSource.loadJSON(json, url); });
 }
 
 var resizeTimerID = null;
@@ -48,12 +54,13 @@ function ResizeTimeline() {
         }, 500);
     }
 }
-
 onLoadHook("LoadTimeline()");
 </script>
 
 <% $Tickets->CountAll %> Tickets
 <div id="<%$id%>" style="height: <%$height%>; border: 1px solid #aaa"></div>
+
+
 
 <%INIT>
 my $Tickets = RT::Tickets->new( $session{CurrentUser} );

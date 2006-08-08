@@ -13,7 +13,12 @@ while ( my $ticket = $Tickets->Next ) {
         start => $ticket->Created,
         ( $ticket->Resolved > $ticket->Created ? (end => $ticket->Resolved) : ()),
         title => $ticket->id,
-        #isDuration => '1',
+        #isDuration => '1', # if on means not point icon
+        #thumbnail => 'thumb.gif', # thumbnail to use instead of icon?
+        #icon => '../../api/images/green-circle.png', # icon to use for point
+        #color => "#0a0",  # color for duration
+        #latestStart => "1872",
+        #earliestEnd => "1878",
         description => $ticket->Subject,
         link  => "$RT::WebPath/Ticket/Display.html?id=".$ticket->id,
     }
